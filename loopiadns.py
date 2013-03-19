@@ -1,11 +1,13 @@
 #!/usr/bin/env python
+# Authors: Stanislav Blokhin
 
 import requests
 from re import search
 import logger
+import configparser
+from socket import gethostbyname, gaierror
 
-username = 'example.com'
-password = 'P4ssw0rd'
+configfile="accounts.cfg"
 
 #
 # Uses Loopia's external IP checker, returns IP address string if it goes well
@@ -22,7 +24,7 @@ def get_my_ip():
 # Sends a GET request to Loopia's DynDNS to update IP address.
 # If address is omitted, tries to map its own public IP to the hostname.
 #
-def update_dns_record(hostname, ip = get_my_ip()):
+def update_dns_record(hostname, username, password, ip = get_my_ip()):
 	dyndns = 'http://dns.loopia.se/XDynDNSServer/XDynDNS.php'
 	if not ip:
 		return False
@@ -38,3 +40,15 @@ def update_dns_record(hostname, ip = get_my_ip()):
 		logger.info("No change")
 	if 'good' is in r.text:
 		logger.info("Went well")
+	return r.text
+
+def resolvehost(hostname)
+	try:
+		gethostbyname(hostname)
+	except gaierror:
+		logger.debug("resolvehost(): Couldn't resolve %s", hostname)
+		return None
+
+def loadconfig(file=configfile):
+	config = configparser.ConfigParser()
+	config.read(file)
