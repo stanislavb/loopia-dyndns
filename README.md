@@ -1,4 +1,4 @@
-loopia-dyndns
+Loopia DynDNS
 =============
 
 Updates DNS records hosted at Loopia, a swedish hosting provider with its own implementation of DynDNS.
